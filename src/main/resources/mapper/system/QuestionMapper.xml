@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.system.mapper.QuestionMapper">
+    <sql id="countQuestionDetailSql" >
+        SELECT
+        COUNT(1)
+        FROM
+        m_question q
+        WHERE 1 = 1
+        <if test="question.questionTitle != null and question.questionTitle != ''">
+            AND q.question_title = #{question.questionTitle}
+        </if>
+
+    </sql>
+
+    <sql id="findQuestionDetailSql">
+        SELECT
+        q.question_id questionId,
+        q.question_title questionTitle,
+        q.question_score questionScore
+
+        FROM
+        m_question q
+
+        WHERE 1 = 1
+        <if test="question.questionTitle != null and question.questionTitle != ''">
+            AND q.question_title = #{question.questionTitle}
+        </if>
+
+    </sql>
+
+    <select id="countQuestionDetail" parameterType="question" resultType="long">
+        <include refid="countQuestionDetailSql"/>
+    </select>
+
+    <select id="findQuestionDetailPage" parameterType="question" resultType="question">
+        <include refid="findQuestionDetailSql"/>
+    </select>
+
+    <select id="findQuestionDetail" parameterType="question" resultType="question">
+        <include refid="findQuestionDetailSql"/>
+    </select>
+
+    <select id="findByName" parameterType="string" resultType="question">
+         SELECT
+        q.question_id questionId,
+        q.question_title questionTitle,
+        q.question_score questionScore
+
+        FROM
+        m_question q
+
+        WHERE  q.question_title = #{questionTitle}
+
+    </select>
+
+
+</mapper>

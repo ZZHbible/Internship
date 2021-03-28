@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.system.mapper.OptionMapper">
+    <sql id="countOptionDetailSql" >
+        SELECT
+        COUNT(1)
+        FROM
+        m_option q
+        WHERE 1 = 1
+        <if test="option.content != null and option.content != ''">
+            AND q.content = #{option.content}
+        </if>
+
+    </sql>
+
+    <sql id="findOptionDetailSql">
+        SELECT
+        q.mid mId,
+        q.content content
+
+        FROM
+        m_option q
+
+        WHERE 1 = 1
+        <if test="option.content != null and option.content != ''">
+            AND q.content = #{option.content}
+        </if>
+
+    </sql>
+
+    <select id="countOptionDetail" parameterType="option" resultType="long">
+        <include refid="countOptionDetailSql"/>
+    </select>
+
+    <select id="findOptionDetailPage" parameterType="option" resultType="option">
+        <include refid="findOptionDetailSql"/>
+    </select>
+
+    <select id="findOptionDetail" parameterType="option" resultType="option">
+        <include refid="findOptionDetailSql"/>
+    </select>
+
+    <select id="findByName" parameterType="string" resultType="option">
+        SELECT
+            q.mid mId,
+            q.content content
+
+        FROM
+            m_option q
+
+        WHERE  q.content = #{content}
+
+    </select>
+
+
+</mapper>
